@@ -207,6 +207,29 @@
       .chk.on::after{content:'✕';}
     }
 
+    /* ===== HOME MINIMAL ===== */
+    .home-hero{min-height:calc(100vh - var(--nav-h));display:flex;align-items:center;justify-content:center;text-align:center;padding:60px 24px;}
+    .home-hero-inner{max-width:520px;width:100%;}
+    .home-kicker{font-family:var(--mono);font-size:11px;letter-spacing:3px;color:var(--text-muted);text-transform:uppercase;margin-bottom:28px;}
+    .home-title{font-size:clamp(52px,10vw,96px);font-weight:700;line-height:1;letter-spacing:-2px;margin-bottom:16px;}
+    .home-sub{font-family:var(--mono);font-size:13px;color:var(--text-muted);letter-spacing:5px;margin-bottom:52px;}
+    .home-cta{display:inline-flex;align-items:center;padding:13px 30px;background:var(--accent);color:#0a1628;font-family:var(--font);font-size:15px;font-weight:700;border:none;border-radius:var(--radius);cursor:pointer;transition:all 0.2s;}
+    .home-cta:hover{background:var(--accent-light);transform:translateY(-2px);}
+    .home-tools{border-top:1px solid var(--border);max-width:600px;margin:0 auto;padding:0 32px;}
+    .home-tool{display:flex;align-items:center;gap:24px;padding:22px 0;border-bottom:1px solid var(--border);cursor:pointer;transition:opacity 0.15s;}
+    .home-tool:hover{opacity:0.65;}
+    .home-tool:hover .home-arr{transform:translateX(5px);}
+    .home-tool-num{font-family:var(--mono);font-size:11px;color:var(--text-muted);min-width:20px;flex-shrink:0;}
+    .home-tool-name{font-size:15px;font-weight:600;color:var(--text-primary);min-width:130px;flex-shrink:0;}
+    .home-tool-desc{font-size:13px;color:var(--text-muted);flex:1;}
+    .home-arr{font-size:14px;color:var(--accent);transition:transform 0.15s;flex-shrink:0;}
+    .home-foot{text-align:center;padding:40px 24px;font-size:11px;color:var(--text-muted);font-family:var(--mono);letter-spacing:0.5px;border-top:1px solid var(--border);max-width:600px;margin:0 auto;}
+    @media(max-width:480px){
+      .home-tool-desc{display:none;}
+      .home-tool-name{min-width:0;flex:1;}
+      .home-tools{padding:0 20px;}
+    }
+
     /* ===== SPA ===== */
     .section{display:none;}
     .section.active{display:block;}
@@ -236,110 +259,38 @@
 <!-- ============================= HOME ============================= -->
 <div id="sec-home" class="section active">
 <main class="page">
-  <section class="hero">
-    <div class="container">
-      <div class="hero-badge">✈ ICAO Standard · Thailand AIP</div>
-      <h1>ระบบแผนการบิน<br><span>Royal Thai Air Force</span></h1>
-      <p>กรอกและส่งแผนการบินออนไลน์ตามมาตรฐาน ICAO · ศึกษาคู่มือการกรอก · ดู Enroute Chart แบบ Interactive</p>
-      <div class="btn-group">
-        <a class="btn btn-primary btn-lg" onclick="showSection('sec-fpl')">📋 กรอก Flight Plan</a>
-        <a class="btn btn-secondary btn-lg" onclick="showSection('sec-chart')">🗺️ Enroute Chart</a>
-      </div>
+
+  <section class="home-hero">
+    <div class="home-hero-inner">
+      <div class="home-kicker">RTAF · ICAO Doc 4444</div>
+      <h1 class="home-title">แผนการบิน</h1>
+      <p class="home-sub">กรอก · ตรวจสอบ · ส่ง</p>
+      <button class="home-cta" onclick="showSection('sec-fpl')">กรอก Flight Plan</button>
     </div>
   </section>
 
-  <div style="background:var(--bg-secondary);border-bottom:1px solid var(--border);">
-    <div class="container" style="display:flex;gap:0;flex-wrap:wrap;">
-      <div style="flex:1;min-width:150px;padding:16px 24px;border-right:1px solid var(--border);text-align:center;"><div style="font-size:22px;font-weight:800;color:var(--accent);">ICAO</div><div style="font-size:12px;color:var(--text-secondary);">มาตรฐาน Doc 4444</div></div>
-      <div style="flex:1;min-width:150px;padding:16px 24px;border-right:1px solid var(--border);text-align:center;"><div style="font-size:22px;font-weight:800;color:var(--accent);">A4</div><div style="font-size:12px;color:var(--text-secondary);">Export PDF 1 หน้า</div></div>
-      <div style="flex:1;min-width:150px;padding:16px 24px;border-right:1px solid var(--border);text-align:center;"><div style="font-size:22px;font-weight:800;color:var(--accent);">60+</div><div style="font-size:12px;color:var(--text-secondary);">สนามบินในไทย</div></div>
-      <div style="flex:1;min-width:150px;padding:16px 24px;text-align:center;"><div style="font-size:22px;font-weight:800;color:var(--accent);">VFR/IFR</div><div style="font-size:12px;color:var(--text-secondary);">รองรับทุกประเภทการบิน</div></div>
+  <div class="home-tools">
+    <div class="home-tool" onclick="showSection('sec-fpl')">
+      <span class="home-tool-num">01</span>
+      <span class="home-tool-name">Flight Plan</span>
+      <span class="home-tool-desc">แบบฟอร์ม ICAO · Export PDF A4</span>
+      <span class="home-arr">→</span>
     </div>
+    <div class="home-tool" onclick="showSection('sec-manual')">
+      <span class="home-tool-num">02</span>
+      <span class="home-tool-name">คู่มือ</span>
+      <span class="home-tool-desc">Field 7–19 · Wake Cat · PBN Codes</span>
+      <span class="home-arr">→</span>
+    </div>
+    <div class="home-tool" onclick="showSection('sec-chart')">
+      <span class="home-tool-num">03</span>
+      <span class="home-tool-name">Enroute Chart</span>
+      <span class="home-tool-desc">Thailand AIS · Pan &amp; Zoom 450 DPI</span>
+      <span class="home-arr">→</span>
+    </div>
+    <div class="home-foot">ICAO Doc 4444 · Thailand AIP CAAT · สำหรับการฝึกเท่านั้น</div>
   </div>
 
-  <section style="background:var(--bg-primary);">
-    <div class="container">
-      <div class="section-header">
-        <div><h2 class="section-title">เครื่องมือการบิน</h2><p class="section-subtitle">ครบทุกสิ่งที่นักบินต้องการก่อน Dispatch</p></div>
-      </div>
-      <div class="feature-grid">
-        <a class="feature-card" onclick="showSection('sec-fpl')">
-          <div class="feature-card-icon card-icon-gold" style="background:rgba(245,158,11,0.12);">📋</div>
-          <h3>กรอก Flight Plan</h3>
-          <p>แบบฟอร์มแผนการบินตามมาตรฐาน ICAO ครบทุก Field ตั้งแต่ Field 7 ถึง Field 19 พร้อม Export เป็น PDF ขนาด A4 หน้าเดียว</p>
-          <ul style="color:var(--text-muted);font-size:13px;margin:0 0 16px 16px;line-height:1.8;"><li>รหัสสนามบิน ICAO อัตโนมัติ</li><li>Export PDF พิมพ์พร้อมใช้</li><li>รองรับ IFR / VFR / Y / Z</li></ul>
-          <div class="feature-card-arrow">เปิดแบบฟอร์ม →</div>
-        </a>
-        <a class="feature-card" onclick="showSection('sec-manual')">
-          <div class="feature-card-icon card-icon-blue" style="background:rgba(59,130,246,0.12);">📖</div>
-          <h3>คู่มือการกรอกแผนการบิน</h3>
-          <p>อธิบายทุก Field ของ ICAO Flight Plan อย่างละเอียด พร้อมตัวอย่างและรหัสอุปกรณ์ตามมาตรฐาน ICAO Annex 2 และ Doc 4444</p>
-          <ul style="color:var(--text-muted);font-size:13px;margin:0 0 16px 16px;line-height:1.8;"><li>Field 7–19 อธิบายครบทุกช่อง</li><li>Wake Turbulence Category</li><li>PBN และ Equipment Codes</li></ul>
-          <div class="feature-card-arrow">อ่านคู่มือ →</div>
-        </a>
-        <a class="feature-card" onclick="showSection('sec-chart')">
-          <div class="feature-card-icon" style="background:rgba(16,185,129,0.12);color:var(--green);">🗺️</div>
-          <h3>Enroute Chart</h3>
-          <p>แผนที่นำร่อง ICAO Thailand AIS · ดู PDF ฉบับเต็ม หรือ Image View แบบ Pan &amp; Zoom ความละเอียดสูง 450 DPI</p>
-          <ul style="color:var(--text-muted);font-size:13px;margin:0 0 16px 16px;line-height:1.8;"><li>PDF embed ดูในหน้าได้เลย</li><li>Image View ซูมได้ 450 DPI</li><li>Download PDF ได้</li></ul>
-          <div class="feature-card-arrow">เปิดแผนที่ →</div>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <section style="background:var(--bg-secondary);border-top:1px solid var(--border);padding:48px 0;">
-    <div class="container">
-      <h2 class="section-title" style="margin-bottom:24px;">รหัสสนามบินที่ใช้บ่อย</h2>
-      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;">
-        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;">
-          <div style="font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;">✈ ทอ. (RTAF)</div>
-          <div style="display:flex;flex-direction:column;gap:6px;">
-            <div style="display:flex;justify-content:space-between;font-size:13px;"><span class="font-mono text-accent">VTBL</span><span class="text-secondary">ลพบุรี (Wing 2)</span></div>
-            <div style="display:flex;justify-content:space-between;font-size:13px;"><span class="font-mono text-accent">VTPP</span><span class="text-secondary">พิษณุโลก (Wing 46)</span></div>
-            <div style="display:flex;justify-content:space-between;font-size:13px;"><span class="font-mono text-accent">VTCC</span><span class="text-secondary">เชียงใหม่ (Wing 41)</span></div>
-            <div style="display:flex;justify-content:space-between;font-size:13px;"><span class="font-mono text-accent">VTUU</span><span class="text-secondary">อุบลราชธานี (Wing 21)</span></div>
-            <div style="display:flex;justify-content:space-between;font-size:13px;"><span class="font-mono text-accent">VTUD</span><span class="text-secondary">อุดรธานี (Wing 23)</span></div>
-            <div style="display:flex;justify-content:space-between;font-size:13px;"><span class="font-mono text-accent">VTUQ</span><span class="text-secondary">นครราชสีมา (Wing 1)</span></div>
-            <div style="display:flex;justify-content:space-between;font-size:13px;"><span class="font-mono text-accent">VTSH</span><span class="text-secondary">หาดใหญ่ (Wing 56)</span></div>
-          </div>
-        </div>
-        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;">
-          <div style="font-size:11px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;">✈ พลเรือน (หลัก)</div>
-          <div style="display:flex;flex-direction:column;gap:6px;">
-            <div style="display:flex;justify-content:space-between;font-size:13px;"><span class="font-mono" style="color:var(--blue);">VTBS</span><span class="text-secondary">สุวรรณภูมิ</span></div>
-            <div style="display:flex;justify-content:space-between;font-size:13px;"><span class="font-mono" style="color:var(--blue);">VTBD</span><span class="text-secondary">ดอนเมือง</span></div>
-            <div style="display:flex;justify-content:space-between;font-size:13px;"><span class="font-mono" style="color:var(--blue);">VTBU</span><span class="text-secondary">อู่ตะเภา</span></div>
-            <div style="display:flex;justify-content:space-between;font-size:13px;"><span class="font-mono" style="color:var(--blue);">VTSP</span><span class="text-secondary">ภูเก็ต</span></div>
-            <div style="display:flex;justify-content:space-between;font-size:13px;"><span class="font-mono" style="color:var(--blue);">VTSM</span><span class="text-secondary">เกาะสมุย</span></div>
-            <div style="display:flex;justify-content:space-between;font-size:13px;"><span class="font-mono" style="color:var(--blue);">VTCI</span><span class="text-secondary">เชียงราย</span></div>
-            <div style="display:flex;justify-content:space-between;font-size:13px;"><span class="font-mono" style="color:var(--blue);">VTSV</span><span class="text-secondary">สุราษฎร์ธานี</span></div>
-          </div>
-        </div>
-        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;">
-          <div style="font-size:11px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;">📡 FIR / ATC ไทย</div>
-          <div style="display:flex;flex-direction:column;gap:6px;">
-            <div style="display:flex;justify-content:space-between;font-size:13px;"><span class="font-mono" style="color:var(--green);">VTBB</span><span class="text-secondary">Bangkok FIR / ACC</span></div>
-            <div style="display:flex;justify-content:space-between;font-size:13px;"><span class="font-mono" style="color:var(--green);">121.5</span><span class="text-secondary">Emergency Frequency</span></div>
-            <div style="display:flex;justify-content:space-between;font-size:13px;"><span class="font-mono" style="color:var(--green);">243.0</span><span class="text-secondary">Guard Freq (Military)</span></div>
-            <div style="display:flex;justify-content:space-between;font-size:13px;"><span class="font-mono" style="color:var(--green);">128.5</span><span class="text-secondary">Bangkok ACC (NW)</span></div>
-            <div style="display:flex;justify-content:space-between;font-size:13px;"><span class="font-mono" style="color:var(--green);">133.0</span><span class="text-secondary">Bangkok ACC (NE)</span></div>
-            <div style="display:flex;justify-content:space-between;font-size:13px;"><span class="font-mono" style="color:var(--green);">126.2</span><span class="text-secondary">Bangkok ACC (S)</span></div>
-            <div style="display:flex;justify-content:space-between;font-size:13px;"><span class="font-mono" style="color:var(--green);">119.1</span><span class="text-secondary">Bangkok ATIS</span></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <footer style="background:var(--bg-secondary);border-top:1px solid var(--border);padding:24px 0;text-align:center;">
-    <div class="container">
-      <p style="color:var(--text-muted);font-size:13px;">
-        FlightPlan TH · อ้างอิง ICAO Doc 4444, ICAO Annex 2 &amp; 6 · Thailand AIP CAAT<br>
-        <span style="font-size:12px;">สำหรับการฝึกและประกอบการเรียนรู้เท่านั้น — ยืนยันข้อมูลจาก NOTAM และ AIP ก่อนทำการบินจริงเสมอ</span>
-      </p>
-    </div>
-  </footer>
 </main>
 </div>
 
