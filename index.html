@@ -1111,7 +1111,7 @@ function exportPDF() { window.print(); }
 /* ── CHART ── */
 var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || window.innerWidth < 768;
 var currentView = 'pdf';
-var scale=1, minScale=0.3, maxScale=5;
+var scale=1, minScale=0.05, maxScale=5;
 var isPanning=false, startX=0, startY=0, panInitDone=false;
 var _chartInited = false;
 
