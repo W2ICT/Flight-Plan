@@ -882,7 +882,8 @@ E/0230 P/005 R/UVE A/GREY ROYAL THAI AIR FORCE C/SCHMIDT
 <div id="sec-chart" class="section">
   <div class="map-page">
     <div class="chart-toolbar">
-      <span style="font-size:13px;font-weight:600;color:var(--accent);">🗺️ Enroute Chart — Thailand ICAO</span>
+      <button class="btn btn-sm btn-secondary" onclick="showSection('sec-home')" style="flex-shrink:0;">← กลับ</button>
+      <span style="font-size:13px;font-weight:600;color:var(--accent);">🗺️ Enroute Chart</span>
       <div style="margin-left:auto;display:flex;gap:6px;align-items:center;flex-wrap:wrap;">
         <button class="btn btn-sm btn-secondary" onclick="toggleView()" id="toggleBtn">🖼 Image</button>
         <a href="Enroute%20Chart.pdf" download class="btn btn-sm btn-secondary">⬇ PDF</a>
@@ -891,11 +892,11 @@ E/0230 P/005 R/UVE A/GREY ROYAL THAI AIR FORCE C/SCHMIDT
     </div>
     <div class="chart-container" id="chartContainer">
       <div id="pdf-view" style="width:100%;height:100%;">
-        <iframe id="pdf-frame" src="" class="chart-embed" style="border:none;"></iframe>
+        <iframe id="pdf-frame" class="chart-embed" style="border:none;"></iframe>
       </div>
       <div id="img-view" style="display:none;width:100%;height:100%;position:relative;">
         <div class="img-viewer" id="imgViewer">
-          <img id="chartImg" src="chart_01.png" alt="Enroute Chart Thailand" draggable="false">
+          <img id="chartImg" alt="Enroute Chart Thailand" draggable="false">
         </div>
         <div class="zoom-controls">
           <button class="zoom-btn" onclick="zoomIn()">+</button>
@@ -1114,6 +1115,11 @@ var scale=1, minScale=0.3, maxScale=5;
 var isPanning=false, startX=0, startY=0, panInitDone=false;
 var _chartInited = false;
 
+function _setImgSrc() {
+  var img = document.getElementById('chartImg');
+  if (!img.src || img.src === location.href) img.src = 'chart_01.png';
+}
+
 function _initChart() {
   if (_chartInited) return; _chartInited = true;
   if (isMobile) {
@@ -1121,6 +1127,7 @@ function _initChart() {
     document.getElementById('pdf-view').style.display = 'none';
     document.getElementById('img-view').style.display = 'block';
     document.getElementById('toggleBtn').textContent = '📄 PDF';
+    _setImgSrc();
     initPanZoom();
   } else {
     var fr = document.getElementById('pdf-frame');
@@ -1132,6 +1139,7 @@ function showFallback() {
   document.getElementById('pdf-view').style.display='none';
   document.getElementById('img-view').style.display='block';
   document.getElementById('toggleBtn').textContent='📄 PDF';
+  _setImgSrc();
   currentView='img'; initPanZoom();
 }
 
