@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flight Plan — CA48/RAF2919</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/icao-form.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+  <div id="nav-placeholder" data-active="fpl"></div>
+
+  <main class="page">
+    <!-- Grey background wrapper around the white form -->
+    <div class="icao-wrapper">
+
+      <!-- Controls above the form -->
+      <div class="icao-controls">
+        <div id="fpl-preview" style="
+          flex:1; min-width:0; background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.15);
+          border-radius:4px; padding:6px 12px;
+          font-family:'Courier New',monospace; font-size:11px;
+          color:#fde68a; line-height:1.5; white-space:pre-wrap; word-break:break-all;
+          min-height:36px;
+        ">(FPL-…)</div>
+        <div style="display:flex;gap:6px;flex-shrink:0;">
+          <button class="btn btn-secondary btn-sm" onclick="clearForm()">🗑 ล้าง</button>
+          <button class="btn btn-secondary btn-sm" onclick="loadExample()">📄 ตัวอย่าง</button>
+          <button class="btn btn-primary btn-sm" onclick="exportPDF()">⬇ Export PDF</button>
+        </div>
+      </div>
+
+      <!-- ══════════════════ ICAO FORM CA48/RAF2919 ══════════════════ -->
+      <div class="icao-form" id="icao-form">
+
+        <div class="ift">FLIGHT PLAN</div>
+
+        <!-- PRIORITY / ADDRESSEE -->
+        <div class="fr">
+          <div class="fc w13">
+            <div class="fl">PRIORITY</div>
+            <div class="fs">&lt;&lt;= FF →</div>
+          </div>
+          <div class="fc wflex">
+            <div class="fl">ADDRESSEE(S)</div>
+            <textarea class="fta" id="f-addr" rows="2" placeholder="VTBBZQZX"></textarea>
+          </div>
+          <div class="weom"><div class="eom">&lt;&lt;=</div></div>
+        </div>
+
+        <!-- FILING TIME / ORIGINATOR -->
+        <div class="fr">
+          <div class="fc w20">
+            <div class="fl">FILING TIME</div>
+            <div class="fc-row" style="display:flex;align-items:center;gap:3px;margin-top:1px;">
+              <div id="cb-ftime" class="cbwrap" data-max="4" data-id="f-ftime"></div>
+              <span class="fs">→</span>
+            </div>
+          </div>
+          <div class="fc wflex">
+            <div class="fl">ORIGINATOR</div>
+            <div class="fc-row" style="display:flex;align-items:center;gap:3px;margin-top:1px;">
+              <div id="cb-orig" class="cbwrap" data-max="8" data-id="f-orig"></div>
+            </div>
+          </div>
+          <div class="weom"><div class="eom">&lt;&lt;=</div></div>
+        </div>
+
+        <!-- SPECIFIC IDENTIFICATION -->
+        <div class="fr">
+          <div class="fc wflex" style="flex-direction:row;align-items:center;gap:6px;padding:2px 5px;">
+            <span class="fl" style="font-size:7px;">SPECIFIC IDENTIFICATION OF ADDRESSEE(S) AND/OR ORIGINATOR</span>
+            <textarea class="fta" id="f-specific" rows="1" style="min-height:16px;"></textarea>
+          </div>
+        </div>
+
+        <!-- FIELD 3 / 7 / 8 / TYPE OF FLIGHT -->
+        <div class="fr">
+          <div class="fc w22">
+            <div class="fl">3 MESSAGE TYPE</div>
+            <div class="fs">&lt;&lt;= (FPL</div>
+          </div>
+          <div class="fc wflex">
+            <div class="fl">7 AIRCRAFT IDENTIFICATION</div>
+            <div style="display:flex;align-items:center;gap:3px;margin-top:1px;">
+              <span class="fs">-</span>
+              <div id="cb-f7" class="cbwrap" data-max="7" data-id="f7"></div>
+            </div>
+          </div>
+          <div class="fc w13">
+            <div class="fl">8 FLIGHT RULES</div>
+            <div style="display:flex;align-items:center;gap:3px;margin-top:1px;">
+              <span class="fs">-</span>
+              <div id="cb-f8r" class="cbwrap" data-max="1" data-id="f8r"></div>
+            </div>
+          </div>
+          <div class="fc w18">
+            <div class="fl">TYPE OF FLIGHT</div>
+            <div style="display:flex;align-items:center;gap:3px;margin-top:1px;">
+              <div id="cb-f8t" class="cbwrap" data-max="1" data-id="f8t"></div>
+            </div>
+          </div>
+          <div class="weom"><div class="eom">&lt;&lt;=</div></div>
+        </div>
+
+        <!-- FIELD 9 / TYPE / WAKE / FIELD 10 -->
+        <div class="fr">
+          <div class="fc w10">
+            <div class="fl">9 NUMBER</div>
+            <div style="display:flex;align-items:center;gap:3px;margin-top:1px;">
+              <span class="fs">-</span>
+              <div id="cb-f9n" class="cbwrap" data-max="2" data-id="f9n"></div>
+            </div>
+          </div>
+          <div class="fc w25">
+            <div class="fl">TYPE OF AIRCRAFT</div>
+            <div style="margin-top:1px;">
+              <div id="cb-f9t" class="cbwrap" data-max="4" data-id="f9t"></div>
+            </div>
+          </div>
+          <div class="fc w18">
+            <div class="fl">WAKE TURBULENCE CAT</div>
+            <div style="display:flex;align-items:center;gap:2px;margin-top:1px;">
+              <span class="fs">/</span>
+              <div id="cb-f9w" class="cbwrap" data-max="1" data-id="f9w"></div>
+            </div>
+          </div>
+          <div class="fc wflex">
+            <div class="fl">10 EQUIPMENT</div>
+            <div style="display:flex;align-items:center;gap:3px;margin-top:1px;">
+              <span class="fs">-</span>
+              <div id="cb-f10c" class="cbwrap" data-max="8" data-id="f10c"></div>
+              <span class="fs">/</span>
+              <div id="cb-f10s" class="cbwrap" data-max="3" data-id="f10s"></div>
+            </div>
+          </div>
+          <div class="weom"><div class="eom">&lt;&lt;=</div></div>
+        </div>
+
+        <!-- FIELD 13 — DEPARTURE / TIME -->
+        <div class="fr">
+          <div class="fc w35">
+            <div class="fl">13 DEPARTURE AERODROME</div>
+            <div style="display:flex;align-items:center;gap:3px;margin-top:1px;">
+              <span class="fs">-</span>
+              <div id="cb-f13d" class="cbwrap" data-max="4" data-id="f13d"></div>
+            </div>
+          </div>
+          <div class="fc wflex">
+            <div class="fl">TIME</div>
+            <div style="display:flex;align-items:center;gap:3px;margin-top:1px;">
+              <div id="cb-f13t" class="cbwrap" data-max="4" data-id="f13t"></div>
+            </div>
+          </div>
+          <div class="weom"><div class="eom">&lt;&lt;=</div></div>
+        </div>
+
+        <!-- FIELD 15 — SPEED / LEVEL / ROUTE -->
+        <div class="fr">
+          <div class="fc w20">
+            <div class="fl">15 CRUISING SPEED</div>
+            <div style="display:flex;align-items:center;gap:3px;margin-top:1px;">
+              <span class="fs">-</span>
+              <div id="cb-f15s" class="cbwrap" data-max="5" data-id="f15s"></div>
+            </div>
+          </div>
+          <div class="fc w18">
+            <div class="fl">LEVEL</div>
+            <div style="margin-top:1px;">
+              <div id="cb-f15l" class="cbwrap" data-max="5" data-id="f15l"></div>
+            </div>
+          </div>
+          <div class="fc wflex">
+            <div class="fl">ROUTE</div>
+            <div style="display:flex;align-items:flex-start;gap:3px;margin-top:1px;">
+              <span class="fs" style="margin-top:1px;">→</span>
+              <textarea class="fta" id="f15r" rows="4" placeholder="TL W9 PEBLI / DCT VTBL A1 CMU DCT"></textarea>
+            </div>
+          </div>
+          <div class="weom" style="align-items:flex-end;padding-bottom:4px;"><div class="eom">&lt;&lt;=</div></div>
+        </div>
+
+        <!-- FIELD 16 — DESTINATION / EET / ALTN / 2ND ALTN -->
+        <div class="fr">
+          <div class="fc w25">
+            <div class="fl">16 DESTINATION AERODROME</div>
+            <div style="display:flex;align-items:center;gap:3px;margin-top:1px;">
+              <span class="fs">-</span>
+              <div id="cb-f16d" class="cbwrap" data-max="4" data-id="f16d"></div>
+            </div>
+          </div>
+          <div class="fc w18">
+            <div class="fl"><span style="display:block;">TOTAL EET</span><span style="display:block;">HR. MIN</span></div>
+            <div style="margin-top:1px;">
+              <div id="cb-f16e" class="cbwrap" data-max="4" data-id="f16e"></div>
+            </div>
+          </div>
+          <div class="fc wflex">
+            <div class="fl">ALTN AERODROME</div>
+            <div style="display:flex;align-items:center;gap:3px;margin-top:1px;">
+              <span class="fs">→</span>
+              <div id="cb-f16a" class="cbwrap" data-max="4" data-id="f16a"></div>
+            </div>
+          </div>
+          <div class="fc w22">
+            <div class="fl">2ND ALTN AERODROME</div>
+            <div style="display:flex;align-items:center;gap:3px;margin-top:1px;">
+              <span class="fs">→</span>
+              <div id="cb-f16b" class="cbwrap" data-max="4" data-id="f16b"></div>
+            </div>
+          </div>
+          <div class="weom"><div class="eom">&lt;&lt;=</div></div>
+        </div>
+
+        <!-- FIELD 18 — OTHER INFORMATION -->
+        <div class="fr">
+          <div class="fc wflex" style="min-height:56px;">
+            <div class="fl">18 OTHER INFORMATION</div>
+            <textarea class="fta" id="f18" rows="3" placeholder="RMK DEP 21/02 OPR RTAF RMK REQ 2 ILS APPROACHES REQ JET A1 REFUELING"></textarea>
+          </div>
+          <div class="weom" style="align-items:flex-end;padding-bottom:4px;"><div class="eom">)&nbsp;&lt;&lt;=</div></div>
+        </div>
+
+        <!-- ══ SUPPLEMENTARY INFORMATION ══ -->
+        <div class="suppl">SUPPLEMENTARY INFORMATION (NOT TO BE TRANSMITTED IN FPL MESSAGES)</div>
+
+        <!-- FIELD 19 — ENDURANCE / POB / EMERGENCY RADIO -->
+        <div class="fr">
+          <div class="fc" style="width:28%;">
+            <div class="fl">19 ENDURANCE</div>
+            <div class="fl" style="margin-top:0px;">HR &nbsp; MIN</div>
+            <div style="display:flex;align-items:center;gap:3px;margin-top:1px;">
+              <span class="fs">- E/</span>
+              <div id="cb-f19e" class="cbwrap" data-max="4" data-id="f19e"></div>
+            </div>
+          </div>
+          <div class="fc" style="width:28%;">
+            <div class="fl">PERSONS ON BOARD</div>
+            <div style="display:flex;align-items:center;gap:3px;margin-top:10px;">
+              <span class="fs">→ P/</span>
+              <div id="cb-f19p" class="cbwrap" data-max="3" data-id="f19p"></div>
+            </div>
+          </div>
+          <div class="fc wflex">
+            <div class="fl">EMERGENCY RADIO</div>
+            <div style="display:flex;gap:10px;margin-top:4px;align-items:center;flex-wrap:wrap;">
+              <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
+                <div class="fl">UHF</div>
+                <div class="chk" id="chk-uhf" onclick="toggleChk(this)"></div>
+              </div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
+                <div class="fl">VHF</div>
+                <div class="chk" id="chk-vhf" onclick="toggleChk(this)"></div>
+              </div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
+                <div class="fl">ELT</div>
+                <div class="chk" id="chk-elt" onclick="toggleChk(this)"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SURVIVAL EQUIPMENT -->
+        <div class="fr">
+          <div class="fc" style="width:18%;">
+            <div class="fl">SURVIVAL<br>EQUIPMENT</div>
+          </div>
+          <div class="fc" style="flex:1;flex-direction:row;align-items:center;gap:6px;flex-wrap:wrap;padding:4px 5px;">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
+              <div class="fl">POLAR</div>
+              <div style="display:flex;align-items:center;gap:2px;">
+                <span class="fs">→</span><div class="chk" id="chk-polar" onclick="toggleChk(this)"></div>
+              </div>
+            </div>
+            <span class="fs">/</span>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
+              <div class="fl">&nbsp;</div>
+              <div class="chk" id="chk-polar2" onclick="toggleChk(this)"></div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
+              <div class="fl">DESERT</div>
+              <div class="chk" id="chk-desert" onclick="toggleChk(this)"></div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
+              <div class="fl">MARITIME</div>
+              <div class="chk" id="chk-maritime" onclick="toggleChk(this)"></div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
+              <div class="fl">JUNGLE</div>
+              <div class="chk" id="chk-jungle" onclick="toggleChk(this)"></div>
+            </div>
+          </div>
+          <div class="fc" style="flex:1;flex-direction:row;align-items:center;gap:6px;flex-wrap:wrap;padding:4px 5px;border-left:var(--b1);">
+            <div class="fl" style="align-self:flex-start;margin-top:2px;">JACKETS</div>
+            <div style="display:flex;align-items:center;gap:2px;">
+              <span class="fs">→</span><div class="chk" id="chk-jck" onclick="toggleChk(this)"></div>
+            </div>
+            <span class="fs">/</span>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
+              <div class="fl">LIGHT</div>
+              <div class="chk" id="chk-light" onclick="toggleChk(this)"></div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
+              <div class="fl">FLUORES</div>
+              <div class="chk" id="chk-fluor" onclick="toggleChk(this)"></div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
+              <div class="fl">UHF</div>
+              <div class="chk" id="chk-juhf" onclick="toggleChk(this)"></div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
+              <div class="fl">VHF</div>
+              <div class="chk" id="chk-jvhf" onclick="toggleChk(this)"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- DINGHIES -->
+        <div class="fr">
+          <div class="fc" style="width:12%;">
+            <div class="fl">DINGHIES</div>
+          </div>
+          <div class="fc wflex" style="flex-direction:row;align-items:center;gap:6px;flex-wrap:wrap;padding:3px 5px;">
+            <div style="display:flex;flex-direction:column;gap:1px;">
+              <div class="fl">NUMBER</div>
+              <div style="display:flex;align-items:center;gap:2px;">
+                <span class="fs">→</span>
+                <div class="chk" id="chk-ding" onclick="toggleChk(this)"></div>
+                <span class="fs">/</span>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:1px;">
+              <div class="fl">CAPACITY</div>
+              <div style="display:flex;align-items:center;gap:2px;">
+                <span class="fs">→</span>
+                <div id="cb-ding-cap" class="cbwrap" data-max="4" data-id="ding-cap"></div>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:1px;">
+              <div class="fl">COVER</div>
+              <div style="display:flex;align-items:center;gap:2px;">
+                <span class="fs">→</span>
+                <div class="chk" id="chk-cover" onclick="toggleChk(this)"></div>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:1px;flex:1;">
+              <div class="fl">COLOUR</div>
+              <div style="display:flex;align-items:center;gap:2px;flex:1;">
+                <span class="fs">→</span>
+                <input class="fti" id="f-ding-col" type="text" maxlength="20" placeholder="">
+              </div>
+            </div>
+          </div>
+          <div class="weom"><div class="eom">&lt;&lt;=</div></div>
+        </div>
+
+        <!-- AIRCRAFT COLOUR AND MARKINGS -->
+        <div class="fr">
+          <div class="fc wflex">
+            <div class="fl">AIRCRAFT COLOUR AND MARKINGS</div>
+            <div style="display:flex;align-items:center;gap:4px;margin-top:1px;">
+              <span class="fs">A /</span>
+              <input class="fti" id="f-color" type="text" maxlength="50" placeholder="GREY ROYAL THAI AIR FORCE">
+            </div>
+          </div>
+        </div>
+
+        <!-- REMARKS -->
+        <div class="fr">
+          <div class="fc wflex">
+            <div class="fl">REMARKS</div>
+            <div style="display:flex;align-items:center;gap:4px;margin-top:1px;">
+              <span class="fs">→ N /</span>
+              <input class="fti" id="f-rmk" type="text" maxlength="80" placeholder="">
+            </div>
+          </div>
+          <div class="weom"><div class="eom">&lt;&lt;=</div></div>
+        </div>
+
+        <!-- PILOT IN COMMAND -->
+        <div class="fr">
+          <div class="fc wflex">
+            <div class="fl">PILOT IN COMMAND</div>
+            <div style="display:flex;align-items:center;gap:4px;margin-top:1px;">
+              <span class="fs">C /</span>
+              <input class="fti" id="f-pic" type="text" maxlength="40" placeholder="SCHMIDT">
+            </div>
+          </div>
+          <div class="weom"><div class="eom">)&nbsp;&lt;&lt;=</div></div>
+        </div>
+
+        <!-- FILED BY / SPACE RESERVED -->
+        <div class="fr">
+          <div class="fc w30">
+            <div class="fl">FILED BY</div>
+            <input class="fti" id="f-filedby" type="text" maxlength="30" style="margin-top:2px;" placeholder="SCHMIDT">
+          </div>
+          <div class="fc wflex">
+            <div class="fl">SPACE RESERVED FOR ADDITIONAL REQUIREMENTS</div>
+            <textarea class="fta" id="f-space" rows="2" style="margin-top:1px;" placeholder="Please provide a telephone number so our operators can contact you if needed&#10;+66 8XXXXXXXX"></textarea>
+          </div>
+        </div>
+
+        <!-- FORM FOOTER -->
+        <div class="iform-footer">
+          <span>CA48/RAF2919</span>
+          <span>VER 1.5.2</span>
+        </div>
+
+      </div><!-- end icao-form -->
+    </div><!-- end icao-wrapper -->
+  </main>
+
+  <script src="js/app.js"></script>
+  <script src="js/flight-plan.js"></script>
+</body>
+</html>

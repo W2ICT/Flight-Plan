@@ -1,0 +1,376 @@
+/* ===== ICAO Flight Plan Form CA48/RAF2919 ===== */
+:root {
+  --ff: Arial, Helvetica, sans-serif;
+  --fm: 'Courier New', Courier, monospace;
+  --b1: 1px solid #000;
+  --b2: 2px solid #000;
+  --ch: 22px;
+  --cw: 15px;
+}
+
+/* Dark wrapper behind the white form */
+.icao-wrapper {
+  background: #4a4a4a;
+  min-height: calc(100vh - 130px);
+  padding: 24px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-x: hidden;
+}
+
+.icao-controls {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  width: 100%;
+  max-width: 790px;
+  min-width: 0;
+}
+
+/* The white A4-style form */
+.icao-form {
+  background: #fff;
+  color: #000;
+  font-family: var(--ff);
+  border: var(--b2);
+  width: 100%;
+  max-width: 790px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+/* ── Title ──────────────────────────────── */
+.ift {
+  text-align: center;
+  font-size: 15px;
+  font-weight: bold;
+  padding: 5px 0;
+  border-bottom: var(--b2);
+  letter-spacing: 5px;
+  font-family: var(--ff);
+}
+
+/* ── Row & Cell ─────────────────────────── */
+.fr  { display: flex; border-bottom: var(--b1); min-height: 32px; overflow: hidden; }
+.fr:last-child { border-bottom: none; }
+
+.fc  {
+  padding: 2px 5px 3px;
+  border-right: var(--b1);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+.fc:last-child { border-right: none; }
+
+.fc-center { justify-content: center; }
+.fc-row    { flex-direction: row; align-items: center; gap: 3px; }
+
+/* widths */
+.w5  { width: 5%;  flex-shrink: 0; }
+.w8  { width: 8%;  flex-shrink: 0; }
+.w10 { width: 10%; flex-shrink: 0; }
+.w12 { width: 12%; flex-shrink: 0; }
+.w13 { width: 13%; flex-shrink: 0; }
+.w15 { width: 15%; flex-shrink: 0; }
+.w18 { width: 18%; flex-shrink: 0; }
+.w20 { width: 20%; flex-shrink: 0; }
+.w22 { width: 22%; flex-shrink: 0; }
+.w25 { width: 25%; flex-shrink: 0; }
+.w28 { width: 28%; flex-shrink: 0; }
+.w30 { width: 30%; flex-shrink: 0; }
+.w35 { width: 35%; flex-shrink: 0; }
+.w40 { width: 40%; flex-shrink: 0; }
+.w50 { width: 50%; flex-shrink: 0; }
+.wflex { flex: 1; min-width: 0; }
+.weom  { flex-shrink: 0; padding: 2px 4px; display: flex; align-items: flex-end; justify-content: flex-end; }
+
+/* ── Labels ─────────────────────────────── */
+.fl {
+  font-family: var(--ff);
+  font-size: 7.5px;
+  font-weight: bold;
+  text-transform: uppercase;
+  white-space: nowrap;
+  line-height: 1.3;
+  margin-bottom: 1px;
+  flex-shrink: 0;
+}
+
+/* ── Static bold monospace ──────────────── */
+.fs {
+  font-family: var(--fm);
+  font-size: 12px;
+  font-weight: bold;
+  white-space: nowrap;
+  line-height: var(--ch);
+}
+
+/* End-of-message symbol */
+.eom {
+  font-family: var(--fm);
+  font-size: 11px;
+  font-weight: bold;
+  white-space: nowrap;
+  align-self: flex-end;
+  margin-bottom: 2px;
+}
+
+/* ── Character boxes ─────────────────────── */
+.cbwrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  flex-wrap: wrap;
+}
+
+.cbpre {
+  font-family: var(--fm);
+  font-size: 12px;
+  font-weight: bold;
+  white-space: nowrap;
+  line-height: var(--ch);
+  flex-shrink: 0;
+}
+
+/* The box row */
+.cbr {
+  display: inline-flex;
+  border: 1.5px solid #000;
+  cursor: text;
+  flex-shrink: 0;
+}
+.cbr.focused { border-color: #00c; box-shadow: 0 0 0 1px #00c; }
+
+/* Single character cell */
+.cbc {
+  width: var(--cw);
+  height: var(--ch);
+  border-right: 1px solid #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--fm);
+  font-size: 12px;
+  font-weight: bold;
+  user-select: none;
+  line-height: 1;
+}
+.cbc:last-child { border-right: none; }
+.cbc.cur { background: #cce; }
+
+/* Transparent input overlaying the full cbwrap — receives clicks & keystrokes directly */
+.cbinput {
+  position: absolute;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  opacity: 0;
+  z-index: 10;
+  cursor: text;
+  border: none; outline: none;
+  background: transparent;
+  color: transparent;
+  caret-color: transparent;
+  font-size: 16px; /* prevent iOS auto-zoom */
+}
+
+/* ── Checkbox (X-style) ─────────────────── */
+.chk {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px; height: 18px;
+  border: 1.5px solid #000;
+  font-family: var(--fm);
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
+  user-select: none;
+  background: white;
+  flex-shrink: 0;
+}
+.chk.on { background: white; }
+.chk.on::after { content: '✕'; }
+.chk.lg { width: 22px; height: 22px; font-size: 15px; }
+
+/* ── Free textarea (route, other info) ───── */
+.fta {
+  font-family: var(--fm);
+  font-size: 11.5px;
+  font-weight: bold;
+  text-transform: uppercase;
+  border: none; outline: none;
+  background: transparent;
+  width: 100%;
+  resize: none;
+  color: #000;
+  padding: 0;
+  line-height: 1.4;
+}
+.fta::placeholder { color: #c0c0c0; font-size: 9px; font-weight: normal; font-family: Arial; text-transform: none; }
+
+/* Small free input (single line) */
+.fti {
+  font-family: var(--fm);
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+  border: none; outline: none;
+  background: transparent;
+  color: #000;
+  padding: 0;
+  flex: 1;
+  min-width: 0;
+}
+.fti::placeholder { color: #ccc; font-size: 9px; font-weight: normal; font-family: Arial; text-transform: none; }
+
+/* ── Supplementary info separator ────────── */
+.suppl {
+  text-align: center;
+  font-size: 8px;
+  font-weight: bold;
+  padding: 3px 4px;
+  border-top: var(--b2);
+  border-bottom: var(--b1);
+  background: #f0f0f0;
+  letter-spacing: 0.2px;
+}
+
+/* ── Footer ─────────────────────────────── */
+.iform-footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 2px 6px;
+  font-size: 7.5px;
+  color: #555;
+  border-top: var(--b1);
+}
+
+/* ── Character-box dropdown ─────────────── */
+.cb-dropdown {
+  position: absolute;
+  z-index: 9999;
+  background: #fff;
+  border: 1.5px solid #000;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+  max-height: 220px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  font-family: var(--ff);
+  font-size: 11px;
+}
+
+.cb-dd-item {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 4px 8px;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+  outline: none;
+}
+.cb-dd-item:last-child { border-bottom: none; }
+.cb-dd-item:hover,
+.cb-dd-item:focus { background: #dbeafe; }
+
+.cb-dd-code {
+  font-family: var(--fm);
+  font-weight: bold;
+  font-size: 12px;
+  min-width: 44px;
+  flex-shrink: 0;
+  color: #000;
+}
+
+.cb-dd-label {
+  color: #444;
+  font-size: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cb-dd-empty {
+  padding: 6px 10px;
+  color: #888;
+  font-size: 10px;
+  font-style: italic;
+}
+
+/* ── Responsive ──────────────────────────────────────────── */
+
+/* iPad (768 – 1024 px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+  :root { --cw: 13px; --ch: 20px; }
+  .icao-wrapper  { padding: 16px 8px; }
+  .icao-form     { max-width: 100%; }
+  .fl            { font-size: 7px; }
+  .fs            { font-size: 11px; }
+  .cbc           { font-size: 11px; }
+  .fta, .fti     { font-size: 11px; }
+  .ift           { font-size: 13px; letter-spacing: 3px; }
+  .chk           { width: 18px; height: 18px; }
+}
+
+/* iPhone — landscape + portrait (< 768 px) */
+@media (max-width: 767px) {
+  :root { --cw: 10px; --ch: 15px; }
+
+  .icao-wrapper {
+    padding: 8px 0;
+    align-items: stretch;
+  }
+  .icao-controls {
+    flex-direction: column;
+    padding: 0 8px;
+    margin-bottom: 8px;
+    max-width: 100%;
+    gap: 6px;
+  }
+  .icao-controls > div { flex-wrap: wrap; }
+
+  .icao-form {
+    max-width: 100%;
+    border-left:  none;
+    border-right: none;
+  }
+
+  .fl         { font-size: 5.5px; }
+  .fs         { font-size: 9px; line-height: var(--ch); }
+  .cbc        { font-size: 9px; }
+  .fta, .fti  { font-size: 9px; }
+  .ift        { font-size: 10px; letter-spacing: 1.5px; }
+  .chk        { width: 14px; height: 14px; font-size: 10px; }
+  .chk.lg     { width: 18px; height: 18px; font-size: 12px; }
+  .suppl      { font-size: 6.5px; }
+  .iform-footer { font-size: 6px; }
+
+  /* Touch-friendly: single-char boxes get wider tap area */
+  .cbwrap[data-max="1"] .cbr { min-width: 28px; justify-content: center; }
+}
+
+/* iPhone portrait / small (< 430 px) */
+@media (max-width: 430px) {
+  :root { --cw: 9px; --ch: 14px; }
+  .fl         { font-size: 5px; }
+  .fs         { font-size: 8px; }
+  .cbc        { font-size: 8px; }
+  .fta, .fti  { font-size: 8px; }
+  .ift        { font-size: 9px; letter-spacing: 1px; }
+  /* Stack the controls preview full-width on very small screens */
+  #fpl-preview { font-size: 9px; }
+}
+
+/* ── Print / PDF ────────────────────────── */
+@media print {
+  .icao-wrapper { background: white; padding: 0; }
+  .icao-controls { display: none; }
+  .icao-form { box-shadow: none; max-width: 100%; }
+}
