@@ -934,24 +934,13 @@ E/0230 P/005 R/UVE A/GREY ROYAL THAI AIR FORCE C/SCHMIDT
       <span style="font-size:13px;font-weight:600;color:var(--accent);">🗺️ Enroute Chart — Thailand ICAO</span>
       <div style="margin-left:auto;display:flex;gap:6px;align-items:center;flex-wrap:wrap;">
         <button class="btn btn-sm btn-secondary" onclick="toggleView()" id="toggleBtn">🖼 Image</button>
-        <a href="Enroute Chart.pdf" download class="btn btn-sm btn-secondary">⬇ PDF</a>
-        <a href="Enroute Chart.pdf" target="_blank" class="btn btn-sm btn-primary">↗ เต็มจอ</a>
+        <a href="Enroute%20Chart.pdf" download class="btn btn-sm btn-secondary">⬇ PDF</a>
+        <a href="Enroute%20Chart.pdf" target="_blank" class="btn btn-sm btn-primary">↗ เต็มจอ</a>
       </div>
     </div>
     <div class="chart-container" id="chartContainer">
       <div id="pdf-view" style="width:100%;height:100%;">
-        <object id="pdfObject" data="Enroute Chart.pdf" type="application/pdf" class="chart-embed">
-          <embed src="Enroute Chart.pdf" type="application/pdf" class="chart-embed">
-          <div id="pdf-unavailable" style="display:flex;align-items:center;justify-content:center;height:100%;background:var(--bg-primary);color:var(--text-secondary);flex-direction:column;gap:16px;text-align:center;">
-            <div style="font-size:48px;">📄</div>
-            <div style="font-size:16px;font-weight:600;color:var(--text-primary);">Enroute Chart</div>
-            <div style="font-size:13px;">Browser ไม่รองรับ PDF embed</div>
-            <div style="display:flex;gap:10px;">
-              <a href="Enroute Chart.pdf" target="_blank" class="btn btn-primary">↗ เปิด PDF</a>
-              <button class="btn btn-secondary" onclick="showFallback()">🖼 ดูเป็นภาพ</button>
-            </div>
-          </div>
-        </object>
+        <iframe id="pdf-frame" src="" class="chart-embed" style="border:none;"></iframe>
       </div>
       <div id="img-view" style="display:none;width:100%;height:100%;position:relative;">
         <div class="img-viewer" id="imgViewer">
@@ -981,6 +970,7 @@ function showSection(id) {
   var links = document.getElementById('navLinks');
   if (links) links.classList.remove('open');
   if (id !== 'sec-chart') window.scrollTo(0, 0);
+  if (id === 'sec-chart') _initChart();
 }
 
 /* ── THAI AIRPORTS ── */
@@ -1167,20 +1157,39 @@ function clearForm() {
 function exportPDF() { window.print(); }
 
 /* ── CHART ── */
+var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || window.innerWidth < 768;
 var currentView = 'pdf';
 var scale=1, minScale=0.3, maxScale=5;
 var isPanning=false, startX=0, startY=0, panInitDone=false;
+var _chartInited = false;
+
+function _initChart() {
+  if (_chartInited) return; _chartInited = true;
+  if (isMobile) {
+    currentView = 'img';
+    document.getElementById('pdf-view').style.display = 'none';
+    document.getElementById('img-view').style.display = 'block';
+    document.getElementById('toggleBtn').textContent = '📄 PDF';
+    initPanZoom();
+  } else {
+    var fr = document.getElementById('pdf-frame');
+    if (!fr.src || fr.src === location.href) fr.src = 'Enroute%20Chart.pdf';
+  }
+}
 
 function showFallback() {
   document.getElementById('pdf-view').style.display='none';
   document.getElementById('img-view').style.display='block';
-  document.getElementById('toggleBtn').textContent='📄 PDF View';
+  document.getElementById('toggleBtn').textContent='📄 PDF';
   currentView='img'; initPanZoom();
 }
 
 function toggleView() {
   if (currentView==='pdf') { showFallback(); }
   else {
+    if (isMobile) { window.open('Enroute%20Chart.pdf','_blank'); return; }
+    var fr = document.getElementById('pdf-frame');
+    if (!fr.src || fr.src === location.href) fr.src = 'Enroute%20Chart.pdf';
     document.getElementById('pdf-view').style.display='block';
     document.getElementById('img-view').style.display='none';
     document.getElementById('toggleBtn').textContent='🖼 Image';
