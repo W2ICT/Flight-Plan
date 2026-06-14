@@ -927,19 +927,55 @@ function showSection(id) {
 
 /* ── THAI AIRPORTS ── */
 var THAI_APTS = [
-  ['VTBL','Lop Buri — Wing 2 RTAF'],['VTPP','Phitsanulok — Wing 46 RTAF'],
-  ['VTPH','Hua Hin — Wing 5 RTAF'],['VTBU','U-Tapao — Wing 21 RTAF'],
-  ['VTUO','Korat — Wing 1 RTAF'],['VTCC','Chiang Mai — Wing 41 RTAF'],
-  ['VTUD','Udon Thani — Wing 23 RTAF'],['VTUU','Ubon Ratchathani — Wing 21 RTAF'],
-  ['VTBS','Suvarnabhumi (BKK)'],['VTBD','Don Mueang (DMK)'],
-  ['VTSP','Phuket International'],['VTSG','Krabi International'],
-  ['VTSM','Koh Samui'],['VTSE','Trang'],['VTST','Nakhon Si Thammarat'],
-  ['VTSK','Narathiwat'],['VTSH','Songkhla / Hat Yai'],
-  ['VTPO','Chiang Rai — Mae Fah Luang'],['VTPN','Nan Nakhon'],
-  ['VTPU','Phrae'],['VTPE','Mae Sot (Tak)'],['VTPC','Phichit'],
-  ['VTPF','Nakhon Sawan'],['VTPB','Phetchabun'],['VTUI','Khon Kaen'],
-  ['VTUK','Nakhon Ratchasima'],['VTUL','Loei'],['VTUS','Sakon Nakhon'],
-  ['VTUQ','Roi Et'],['VTUW','Mukdahan'],['ZZZZ','ไม่อยู่ในรายการ / Unknown'],
+  // ── กรุงเทพฯ / Bangkok & Central ──────────────────────────
+  ['VTBS','VTBS — กรุงเทพฯ / Bangkok — Suvarnabhumi Intl (BKK)'],
+  ['VTBD','VTBD — กรุงเทพฯ / Bangkok — Don Mueang Intl (DMK)'],
+  ['VTBU','VTBU — อู่ตะเภา / U-Tapao — Wing 6 RTAF (UTP)'],
+  ['VTBK','VTBK — กำแพงแสน / Kamphaeng Saen, Nakhon Pathom'],
+  ['VTBL','VTBL — ลพบุรี / Lop Buri — Khok Kathiam, Wing 2 RTAF'],
+  ['VTBO','VTBO — ตราด / Trat'],
+  ['VTPH','VTPH — หัวหิน / Hua Hin (HHQ)'],
+  // ── เหนือ / Northern ──────────────────────────────────────
+  ['VTCC','VTCC — เชียงใหม่ / Chiang Mai Intl — Wing 41 RTAF (CNX)'],
+  ['VTCT','VTCT — เชียงราย / Chiang Rai — Mae Fah Luang Intl (CEI)'],
+  ['VTCH','VTCH — แม่ฮ่องสอน / Mae Hong Son (HGN)'],
+  ['VTCI','VTCI — ปาย / Pai, Mae Hong Son (PYY)'],
+  ['VTCL','VTCL — ลำปาง / Lampang (LPT)'],
+  ['VTCN','VTCN — น่าน / Nan Nakhon (NNT)'],
+  ['VTCP','VTCP — แพร่ / Phrae (PRH)'],
+  ['VTCS','VTCS — แม่สะเรียง / Mae Sariang, Mae Hong Son'],
+  // ── กลาง-เหนือ / Central-North ────────────────────────────
+  ['VTPB','VTPB — เพชรบูรณ์ / Phetchabun (PHY)'],
+  ['VTPM','VTPM — แม่สอด / Mae Sot, Tak (MAQ)'],
+  ['VTPO','VTPO — สุโขทัย / Sukhothai (THS)'],
+  ['VTPP','VTPP — พิษณุโลก / Phitsanulok — Wing 46 RTAF (PHS)'],
+  ['VTPT','VTPT — ตาก / Tak'],
+  // ── ใต้ / Southern ───────────────────────────────────────
+  ['VTSB','VTSB — สุราษฎร์ธานี / Surat Thani Intl (URT)'],
+  ['VTSC','VTSC — นราธิวาส / Narathiwat (NAW)'],
+  ['VTSE','VTSE — ชุมพร / Chumphon (CJM)'],
+  ['VTSF','VTSF — นครศรีธรรมราช / Nakhon Si Thammarat (NST)'],
+  ['VTSG','VTSG — กระบี่ / Krabi Intl (KBV)'],
+  ['VTSK','VTSK — ปัตตานี / Pattani (PAN)'],
+  ['VTSM','VTSM — เกาะสมุย / Ko Samui (USM)'],
+  ['VTSP','VTSP — ภูเก็ต / Phuket Intl (HKT)'],
+  ['VTSR','VTSR — ระนอง / Ranong (UNN)'],
+  ['VTSS','VTSS — หาดใหญ่ / Hat Yai Intl — Wing 56 RTAF (HDY)'],
+  ['VTST','VTST — ตรัง / Trang (TST)'],
+  ['VTSY','VTSY — เบตง / Betong'],
+  // ── อีสาน / Northeast ──────────────────────────────────────
+  ['VTUD','VTUD — อุดรธานี / Udon Thani Intl — Wing 23 RTAF (UTH)'],
+  ['VTUI','VTUI — สกลนคร / Sakon Nakhon (SNO)'],
+  ['VTUK','VTUK — ขอนแก่น / Khon Kaen (KKC)'],
+  ['VTUL','VTUL — เลย / Loei (LOE)'],
+  ['VTUN','VTUN — โคราช / Nakhon Ratchasima — Wing 1 RTAF'],
+  ['VTUO','VTUO — บุรีรัมย์ / Buri Ram (BFV)'],
+  ['VTUQ','VTUQ — นครราชสีมา / Nakhon Ratchasima (Chokchai)'],
+  ['VTUV','VTUV — ร้อยเอ็ด / Roi Et (ROI)'],
+  ['VTUU','VTUU — อุบลราชธานี / Ubon Ratchathani — Wing 21 RTAF (UBP)'],
+  ['VTUW','VTUW — นครพนม / Nakhon Phanom (KOP)'],
+  // ── อื่นๆ ──────────────────────────────────────────────────
+  ['ZZZZ','ZZZZ — ไม่อยู่ในรายการ / Unknown — ระบุใน Field 18'],
 ];
 
 /* ── DROPDOWN OPTIONS ── */
@@ -1036,7 +1072,9 @@ function filterDropdown(id, query) {
   var opts = CB_OPTS[id];
   if (!opts) return;
   var q = query.toUpperCase();
-  var filtered = q ? opts.filter(function(o){ return o[0].startsWith(q)||o[1].toUpperCase().includes(q); }) : opts;
+  var filtered = q ? opts.filter(function(o){
+    return o[0].includes(q) || o[1].toUpperCase().includes(q) || o[1].includes(query);
+  }) : opts;
   dd.innerHTML = '';
   if (!filtered.length) { var e=document.createElement('div'); e.className='cb-dd-empty'; e.textContent='ไม่พบรายการ'; dd.appendChild(e); return; }
   filtered.forEach(function(o) {
